@@ -1,6 +1,10 @@
 \begin{titlepage}
-  \centering % Center all text
-	\vspace*{\baselineskip} % White space at the top of the page
+
+  \vspace{1 in}
+  \begin{center}
+  \newcommand*{\titlegroup}{
+    \centering
+    \vspace*{\baselineskip} % White space at the top of the page
 	
 	\rule{\textwidth}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt} % Thick horizontal line
 	\rule{\textwidth}{0.4pt}\\[\baselineskip] % Thin horizontal line
@@ -12,9 +16,7 @@
 	\scshape % Small caps
 	
 	\vspace*{1\baselineskip} % Whitespace between location/year and editors
-  \vspace{1 in}
-  \begin{center}
-    {\large{\textsl{
+	{\large{\textsl{
 				{A \\ 
 					  Project Report \\ %\underline{•}
 					Submitted in Partial Fulfillment of the Bangalore University\\
@@ -24,10 +26,33 @@
                     in\\
                     \large \bf Electronics and \\
                     \large \bf Communication Engineering 
-	  }}}}\\
-    \vspace{50mm}
+	}}}}\\
+	[5ex] \emph{by} \\[1ex]
+	%Submitted by \\[\baselineskip]
+  }
 
+  \titlegroup
+
+    % \vspace{1.5 in}
+    % \vspace{50mm}
     
+    % \begin{flushleft}
+    % \begin{multicols}{2}
+    % 	Supervisors: \\
+    % 	\supervisorA \\
+    % 	\supervisorB \\
+    % 	\vfill\null
+    % 	\columnbreak
+    	
+    % 	Group Members: \\
+    % 	\memberA \ (\indexA) \\
+    % 	\memberB \ (\indexB) \\
+    % 	\memberC \ (\indexC) \\
+    % 	\memberD \ (\indexD) \\
+    	
+
+    % \end{multicols}
+    % \end{flushleft}
     
 %	Supervisor:	 	\hfill  	Group Members: \\
 %    \supervisorA \hfill 	\memberA  - \indexA \\
@@ -35,8 +60,6 @@
 %    					  \hfill 	 \memberC  - \indexC \\
 %   						  \hfill 	 \memberD  - \indexD \\
     
-    \vspace{40mm}
-    February, 2020\\
 
   \end{center}
 \end{titlepage}

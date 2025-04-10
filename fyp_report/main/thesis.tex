@@ -1,4 +1,5 @@
-%% Author: Kanat Bekt
+%% Author: Mohammed Hamza
+%% Date:
 %% Description: Generic and customizable thesis/dissertation template.
 %% URL: https://github.com/Bekt/thesis-template
 
@@ -21,22 +22,25 @@
 \usepackage{fancyvrb}
 \usepackage{float}
 \usepackage{hyperref}
+\usepackage{fancyhdr} % Required for fancy page styles
+\usepackage{xcolor} % Required for defining custom colors
+\usepackage{listings} % Required for code listings
 \usepackage{tabulary}
 \usepackage{multicol}
 \usepackage{times}
 \usepackage{epsfig}
 
 % variables definition
-\newcommand{\pavan}{W M D K N Ranasinghe}
-\newcommand{\nanda}{S C Liyanarachchi}
-\newcommand{\daanish}{B M H Jayawardhana}
-\newcommand{\hamza}{K D H P Ranasinghe}
-\newcommand{\regpavan}{U03NM21T0430}
-\newcommand{\regnanda}{U03NM21T0430}
-\newcommand{\regdaanish}{U03NM21T043045}
-\newcommand{\reghamza}{U03NM21T043044}
-\newcommand{\hod}{Dr. kiran}
-\newcommand{\guide}{Dr BPH}
+\newcommand{\memberA}{Mohammed Hamza}
+\newcommand{\memberB}{S C asldf}
+\newcommand{\memberC}{B M H Jayawardhana}
+\newcommand{\memberD}{K D H P Ranasinghe}
+\newcommand{\indexA}{U03NM21T043044}
+\newcommand{\indexB}{150360A}
+\newcommand{\indexC}{150273J}
+\newcommand{\indexD}{150504V}
+\newcommand{\supervisorA}{Dr BPH}
+\newcommand{\supervisorB}{Dr Sadeep Jayasumana}
 \input{defs}
 
 % Table of contents.
@@ -59,9 +63,68 @@
 % Spacing after a caption.
 \setlength{\belowcaptionskip}{-15pt}
 
-% Spacing before a footer.
-\setlength{\skip\footins}{0.5cm}
+% % Spacing before a footer.
+% \setlength{\skip\footins}{0.5cm}
+\geometry{a4paper, margin=1in} 
 
+\pagestyle{fancy}
+\fancyhf{} % Clear all header and footer fields
+\fancyhead[L]{PLL}
+\fancyhead[R]{\makebox[\textwidth][r]{\textbf{\nouppercase{\leftmark}}}} % Right-alig
+
+\fancyfoot[L]{\textbf{Department of ECE}} % Left side: Department name
+\fancyfoot[C]{\textbf{Aug 2024 – Dec 2024}} % Center: Semester dates
+\fancyfoot[R]{\textbf{Page \thepage}} % Right side: Page number
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Define a custom page style for section pages
+\fancypagestyle{sectionstyle}{
+  \fancyhf{} % Clear all header and footer fields
+  \renewcommand{\headrulewidth}{0pt} 
+  \fancyfoot[L]{\textbf{Department of ECE}} % Left side: Department name
+  \fancyfoot[C]{\textbf{Aug 2024 – Dec 2024}} % Center: Semester dates
+  \fancyfoot[R]{\textbf{Page \thepage}} % Right side: Page number
+}
+
+% Apply custom style to section pages
+\makeatletter
+\preto\section{\thispagestyle{sectionstyle}}
+\makeatother
+
+% No header on the first page of a section
+
+\titleformat{\section}[block]{\centering\Large\bfseries}{}{0pt}{} 
+\titlespacing*{\section}{0pt}{\baselineskip}{\baselineskip}
+
+
+% \renewcommand{\section}{
+%     \clearpage % Start each section on a new page
+%     \pagestyle{plain} % Remove header
+%     \oldsection
+%     \thispagestyle{plain} % Ensure no header on this first page
+%     \pagestyle{fancy} % Resume normal header style
+% } have to check thisfkdljal;dskfa;sdkl;falsd;f
+
+\definecolor{light-gray}{gray}{0.95} % Define the light-gray color
+\lstset{
+  basicstyle=\ttfamily\small,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue}\bfseries,
+  stringstyle=\color{red},
+  commentstyle=\color{gray},
+  morekeywords={int, return, Serial, if, else}, % Add any other keywords specific to your code
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  breaklines=true,
+  captionpos=b,
+  tabsize=2,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  breakatwhitespace=true,
+  backgroundcolor=\color{light-gray}, % Set background color
+}
 
 \begin{document}
 
@@ -72,12 +135,15 @@
   
     % Roman numeral numbering until introduction.
   \pagestyle{plain}
-  \pagenumbering{roman}
+  \pagenumbering{arabic}
   
-  \include{chapters/Signatures}
+  % \include{chapters/Signatures}
+  % \include{chapters/Declaration}
+  % \include{chapters/Declaration_Supervisor}
   \include{chapters/Abstract}
   \include{chapters/Dedication}
   \include{chapters/Acknowledgements}
+
   
   \onehalfspacing
   \tableofcontents
@@ -91,6 +157,7 @@
   \pagebreak
   
     \include{chapters/Acronyms}
+    \include{chapters/Symbols}
   
 
   % Change the numbering back to normal.
