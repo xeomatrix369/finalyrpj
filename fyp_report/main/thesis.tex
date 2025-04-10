@@ -22,6 +22,7 @@
 \usepackage{fancyvrb}
 \usepackage{float}
 \usepackage{hyperref}
+\usepackage{svg}
 \usepackage{fancyhdr} % Required for fancy page styles
 \usepackage{xcolor} % Required for defining custom colors
 \usepackage{listings} % Required for code listings
@@ -32,33 +33,40 @@
 
 % variables definition
 \newcommand{\memberA}{Mohammed Hamza}
-\newcommand{\memberB}{S C asldf}
-\newcommand{\memberC}{B M H Jayawardhana}
-\newcommand{\memberD}{K D H P Ranasinghe}
+\newcommand{\memberB}{abc}
+\newcommand{\memberC}{def}
+\newcommand{\memberD}{xyz}
+\newcommand{\memberE}{xyz}
 \newcommand{\indexA}{U03NM21T043044}
 \newcommand{\indexB}{150360A}
 \newcommand{\indexC}{150273J}
 \newcommand{\indexD}{150504V}
-\newcommand{\supervisorA}{Dr BPH}
-\newcommand{\supervisorB}{Dr Sadeep Jayasumana}
+\newcommand{\indexE}{150504V}
+\newcommand{\guideA}{Dr BPH}
+\newcommand{\guideB}{Dr HMV}
 \input{defs}
 
 % Table of contents.
-\setcounter{secnumdepth}{2}
-\setcounter{tocdepth}{2}
+% \setcounter{secnumdepth}{3}
+% \setcounter{tocdepth}{3}
 
-% Chapter title format, section format, subsection format.
-\titleformat{\chapter}
-  {\normalfont\Large\bfseries\centering}{\thechapter}{1em}{}
-\titleformat{\section}
-  {\normalfont\bfseries}{\thesection}{1em}{}
-\titleformat{\subsection}
-  {\normalfont\itshape}{\thesubsection}{1em}{}
+% % Chapter title format, section format, subsection format.
+% \titleformat{\chapter}
+%   {\normalfont\Large\bfseries}{\thechapter}{1em}{}
+% \titleformat{\section}
+%   {\normalfont\Large\bfseries}{\thesection}{1em}{}
+% \titleformat{\subsection}
+%   {\normalfont\bfseries}{\thesubsection}{1em}{}
+% 
+% \titleformat{\section}[block]{\centering\Large\bfseries}{}{0pt}{} 
+% \titlespacing*{\section}{0pt}{\baselineskip}{\baselineskip}
+% % Chapter, section, subsection title spacings.
+% \titlespacing*{\chapter}{0pt}{0ex plus 1ex minus .2ex}{2.3ex plus .2ex}
+% \titlespacing*{\section} {0pt}{1ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+% \titlespacing*{\subsection} {0pt}{2ex plus 1ex minus .2ex}{1ex plus .2ex}
 
-% Chapter, section, subsection title spacings.
-\titlespacing*{\chapter}{0pt}{0ex plus 1ex minus .2ex}{2.3ex plus .2ex}
-\titlespacing*{\section} {0pt}{1ex plus 1ex minus .2ex}{1.5ex plus .2ex}
-\titlespacing*{\subsection} {0pt}{2ex plus 1ex minus .2ex}{1ex plus .2ex}
+% renew counter for section numbering
+
 
 % Spacing after a caption.
 \setlength{\belowcaptionskip}{-15pt}
@@ -68,33 +76,40 @@
 \geometry{a4paper, margin=1in} 
 
 \pagestyle{fancy}
-\fancyhf{} % Clear all header and footer fields
-\fancyhead[L]{PLL}
-\fancyhead[R]{\makebox[\textwidth][r]{\textbf{\nouppercase{\leftmark}}}} % Right-alig
+\fancyhf{}
+\fancyhead[L]{PLL implementation}
 
-\fancyfoot[L]{\textbf{Department of ECE}} % Left side: Department name
-\fancyfoot[C]{\textbf{Aug 2024 – Dec 2024}} % Center: Semester dates
-\fancyfoot[R]{\textbf{Page \thepage}} % Right side: Page number
-\renewcommand{\footrulewidth}{0.4pt}
 
-% Define a custom page style for section pages
-\fancypagestyle{sectionstyle}{
-  \fancyhf{} % Clear all header and footer fields
-  \renewcommand{\headrulewidth}{0pt} 
-  \fancyfoot[L]{\textbf{Department of ECE}} % Left side: Department name
-  \fancyfoot[C]{\textbf{Aug 2024 – Dec 2024}} % Center: Semester dates
-  \fancyfoot[R]{\textbf{Page \thepage}} % Right side: Page number
-}
+% \pagestyle{fancy}
+% \fancyhf{} % Clear all header and footer fields
+% \fancyhead[L]{PLL}
+% \fancyhead[R]{\makebox[\textwidth][r]{\textbf{\nouppercase{\leftmark}}}} % Right-alig
+
+% \fancyfoot[L]{\textbf{Department of ECE}} % Left side: Department name
+% \fancyfoot[C]{\textbf{Jan 2025 – Apr 2025}} % Center: Semester dates
+% \fancyfoot[R]{\textbf{Page \thepage}} % Right side: Page number
+% \renewcommand{\footrulewidth}{0.4pt}
+% % Define a custom page style for section pages
+% \fancypagestyle{chapterstyle}{
+%   \fancyhf{} % Clear all header and footer fields
+%   \renewcommand{\headrulewidth}{0pt} 
+%   \fancyfoot[L]{\textbf{Department of ECE}} % Left side: Department name
+%   \fancyfoot[C]{\textbf{Jan 2025 – Apr 2025}} % Center: Semester dates
+%   \fancyfoot[R]{\textbf{Page \thepage}} % Right side: Page number
+% }
 
 % Apply custom style to section pages
-\makeatletter
-\preto\section{\thispagestyle{sectionstyle}}
-\makeatother
+% \makeatletter
+% \preto\section{\thispagestyle{sectionstyle}}
+% \makeatother
+
+% \makeatletter
+% \preto\chapter{\thispagestyle{chapterstyle}}
+% \makeatother
 
 % No header on the first page of a section
 
-\titleformat{\section}[block]{\centering\Large\bfseries}{}{0pt}{} 
-\titlespacing*{\section}{0pt}{\baselineskip}{\baselineskip}
+
 
 
 % \renewcommand{\section}{
@@ -131,6 +146,7 @@
   \onehalfspacing
   \include{chapters/Title}
 
+
   \singlespacing
   
     % Roman numeral numbering until introduction.
@@ -139,7 +155,7 @@
   
   % \include{chapters/Signatures}
   % \include{chapters/Declaration}
-  % \include{chapters/Declaration_Supervisor}
+  % \include{chapters/Declaration_Supervisor} 
   \include{chapters/Abstract}
   \include{chapters/Dedication}
   \include{chapters/Acknowledgements}
