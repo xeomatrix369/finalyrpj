@@ -1,0 +1,73 @@
+\begin{figure}[h]
+    \begin{subfigure}[][][1]{0.5\textwidth}
+        \centering
+    \resizebox{1\textwidth}{!}{%
+    \begin{circuitikz}
+    \tikzstyle{every node}=[font=\Large]
+    
+    
+    \draw [ line width=0.6pt ] (8,16.5) rectangle  node {\Large VCO} (13.25,13.25);
+    \draw [->, >=Stealth] (6.75,15) -- (8,15);
+    \draw [->, >=Stealth] (13.25,15) -- (14.75,15);
+    \node [font=\Large] at (5.5,15) {$V_{Cntrl}(V_{C})$};
+    \node [font=\Large] at (15.3,15) {$f_{out}$};
+    \end{circuitikz}
+    }%
+    \end{subfigure}
+    \begin{subfigure}[][][1]{0.5\textwidth}
+        \centering
+            \centering
+            \begin{tikzpicture}[
+                axis/.style={->, thick},
+                dashedline/.style={dashed, thick},
+                solidline/.style={thick},
+                font=\small,
+                scale=1.2
+            ]
+            
+            % Axes
+            \draw[axis] (0,0) -- (6,0) node[right] {$V_C$};
+            \draw[axis] (0,0) -- (0,5) node[above] {$f$};
+            
+            % Coordinates
+            \coordinate (Vcmin) at (1,0);
+            \coordinate (Vcnom) at (3,0);
+            \coordinate (Vcmax) at (5,0);
+            
+            \coordinate (fcmin) at (0,1);
+            \coordinate (fcnom) at (0,3);
+            \coordinate (fcmax) at (0,4.5);
+            
+            \coordinate (p1) at (1,1);
+            \coordinate (p2) at (3,3);
+            \coordinate (p3) at (5,4.5);
+            
+            % Vertical dashed lines
+            \draw[dashedline] (Vcmin) -- (p1);
+            \draw[dashedline] (Vcnom) -- (p2);
+            \draw[dashedline] (Vcmax) -- (p3);
+            
+            % Horizontal dashed lines
+            \draw[dashedline] (fcmin) -- (p1);
+            \draw[dashedline] (fcnom) -- (p2);
+            \draw[dashedline] (fcmax) -- (p3);
+            
+            % VCO Line
+            \draw[solidline] (p1) -- (p3);
+            
+            % Labels
+            \node[below] at (Vcmin) {$V_{C(\min)}$};
+            \node[below] at (Vcnom) {$V_{C(\text{nom})}$};
+            \node[below] at (Vcmax) {$V_{C(\max)}$};
+            
+            \node[left] at (fcmin) {$f_{o(\min)}$};
+            \node[left] at (fcnom) {$f_{o(\text{nom})}$};
+            \node[left] at (fcmax) {$f_{o(\max)}$};
+            
+            \end{tikzpicture}
+    \end{subfigure}            
+    
+    \label{fig:vco_block}
+    \caption{VCO Block Diagram and Characteristics}
+    % \vspace{-0.5cm}
+\end{figure}

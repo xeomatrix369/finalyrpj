@@ -1,0 +1,24 @@
+\begin{figure}[!ht]
+    \centering
+    \resizebox{0.2\textwidth}{!}{%
+    \begin{circuitikz}
+    \tikzstyle{every node}=[font=\large]
+    
+    
+    \draw [ line width=0.6pt](10.75,16) to[american current source,l={ \large Icp}] (10.75,14);
+    \draw [ line width=0.6pt](10.75,11.75) to[american current source,l={ \large Icp}] (10.75,9.5);
+    \draw [line width=0.6pt](10.75,11.75) to[normal open switch] (10.75,12.5);
+    \draw [line width=0.6pt](10.75,12.5) to[normal open switch] (10.75,14);
+    \draw [line width=0.6pt](10.75,9.75) to (10.75,9.5) node[ground]{};
+    \draw [ line width=0.6pt](10.25,16) to[short] (11.25,16);
+    \draw [ line width=0.6pt](10.75,12.75) to[short, -o] (12,12.75) ;
+    \draw [ line width=0.6pt](10.75,12) to[short, -o] (9.25,12) ;
+    \draw [ line width=0.6pt](10.75,13.25) to[short, -o] (9.25,13.25) ;
+    \node [font=\large] at (12.5,13) {Iout};
+    \node [font=\large] at (8.25,13.25) {Up};
+    \node [font=\large] at (8.5,12) {Down};
+    \end{circuitikz}
+    }%
+    
+    \label{fig:my_label}
+\end{figure}

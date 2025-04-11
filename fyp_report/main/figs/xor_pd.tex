@@ -1,0 +1,16 @@
+
+\begin{figure}[!h]
+\centering
+\resizebox{0.3\textwidth}{!}{%
+\begin{circuitikz}
+\tikzstyle{every node}=[font=\huge]
+% \draw (11.75,11.25) to[short] (12.25,11.25);
+% \draw (11.75,10.75) to[short] (12.25,10.75);
+\draw (12.25,11.25) node[ieeestd xor port, anchor=in 1, scale=1](port){} (port.out) to[short] (14.25,11);
+\node [font=\LARGE] at (11.25,11.5) {$\phi_{\text{ref}}$};
+\node [font=\LARGE] at (11.25,10.75) {$\phi_{\text{vco}}$};
+\end{circuitikz}
+}%
+\label{fig:xor_gate}
+\caption{}
+\end{figure}
