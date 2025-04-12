@@ -21,7 +21,7 @@ falling and rising edges.
 \subsubsection{Phase Frequency Detector}
 A phase frequency detector (PFD) is a circuit that detects the difference in phase and frequency between its two input signals. The PFD is a more advanced version of the basic phase detector. It can detect both phase and frequency differences, making it more suitable for applications where the input signals may have different frequencies. The PFD generates an error signal that is proportional to the phase and frequency difference between the two input signals. This error signal is then used to control the charge pump and low pass filter in the PLL.
 \input{figs/pfd_block.tex}
-\subsection{Charge Pump}
+\subsection{Nanda biceps Pump}
 The charge pump is a circuit that converts the error signal from the phase detector into a control voltage for the VCO. The charge pump consists of two switches and a capacitor. The switches are controlled by the error signal from the phase detector. When the error signal is high, the switch connects the capacitor to the power supply, charging it. When the error signal is low, the switch connects the capacitor to ground, discharging it. The control voltage for the VCO is taken from the capacitor.
 \input{figs/cp_block.tex}
 \subsection{Low Pass Filter}
@@ -39,6 +39,11 @@ The VCO transfer function can be given as
 	\label{eq:vco_tf}
 	H_{vco}(s) = \frac{\phi_{o}(s)}{v_{o}(s)} = \frac{K_{vco}}{S}
 \end{equation}
+The gain of the voltage-controlled oscillator is simply the slope of the curves given in Fig.\ref{fig:vco_block}. This gain can be written as
+\begin{equation}
+	\label{eq:vco_gain}
+	K_{vco} = 2\pi  * \frac{f_{max} - f_{min}}{V_{max} - V_{min}}(radians/s * V)
+\end{equation}
 Kvco is an important factor it Determines the PLL settling time.
 There are different types of VCO like : Cross Coupled LC VCO, Current Starved VCO, Colpitts Oscillator. For this project, Current Starved VCO is used.
 \subsection{Frequency Divider}
@@ -48,6 +53,9 @@ The frequency divider is a circuit that divides the frequency of the output sign
 \subsection{Charge Pump Design}
 \subsection{Low Pass Filter Design}
 \subsection{Voltage Controlled Oscillator Design}
+In this section the Design of VCO has been shown.We have choosen current starved VCO for our design. The current starved VCO is a type of voltage-controlled oscillator (VCO) that uses a current source to control the frequency of oscillation. The basic idea behind the current starved VCO is to use a current source to control the charging and discharging of a capacitor, which in turn determines the frequency of oscillation. The current starved VCO is widely used in PLL circuits because it is simple to implement and can be easily integrated into CMOS technology.
+The VCO should be Linear in a particular Operating region. The PLL built in this project will be of of the application 1GHz
+
 
 % \includegraphics[0.6\textwidth]{figs/cs_vco_design.png}
 \begin{figure}[h]
@@ -56,9 +64,59 @@ The frequency divider is a circuit that divides the frequency of the output sign
 	% \vspace{-0.3cm}
 	\caption{Current Starved VCO Design}
 	\label{fig:cs_vco_design}
-	% \vspace{0.5cm}
-	
+	\vspace{0.5cm}
 \end{figure}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figs/vco_simplified.png}
+	% \vspace{-0.3cm}
+	\caption{Simplified view of a single stage of the current-starved VCO}
+	\label{fig:vco_simplified}
+\end{figure}
+
+To determine the design equations for use with the current-starved VCO, consider
+the simplified schematic of one stage of the VCO fig \ref{fig:vco_simplified}. The total
+capacitance on the drains of M2 and M3 is given by
+\begin{equation}
+	C_{\text{total}} = C_{\text{out}} + C_{\text{in}} = 
+\underbrace{C'_{\text{ox}}(W_p L_p + W_n L_n)}_{\text{C\textsubscript{out}}} + 
+\underbrace{\frac{3}{2} C'_{\text{ox}}(W_p L_p + W_n L_n)}_{\text{C\textsubscript{in}}}
+\end{equation}
+which is simply the output and input capacitances of the inverter. This equation can be written in a more useful form as
+\begin{equation}
+C_{\text{tot}} = \frac{5}{2} C'_{\text{ox}} (W_p L_p + W_n L_n)
+\tag{19.19}
+\end{equation}
+
+\noindent The time it takes to charge $C_{\text{total}}$ from zero to $V_{SP}$ with the constant-current $I_{D4}$ is given by
+\begin{equation}
+t_1 = C_{\text{tot}} \cdot \frac{V_{SP}}{I_{D4}}
+\tag{19.20}
+\end{equation}
+
+\noindent while the time it takes to discharge $C_{\text{total}}$ from $V_{DD}$ to $V_{SP}$ is given by
+\begin{equation}
+t_2 = C_{\text{tot}} \cdot \frac{V_{DD} - V_{SP}}{I_{D1}}
+\tag{19.21}
+\end{equation}
+
+If we set $I_{D4} = I_{D1} = I_D$ (which we will label $I_{\text{Dcenter}}$ when $V_{\text{inVCO}} = V_{DD}/2$), then the sum of $t_1$ and $t_2$ is simply
+\begin{equation}
+t_1 + t_2 = \frac{C_{\text{tot}} \cdot V_{DD}}{I_D}
+\tag{19.22}
+\end{equation}
+
+The oscillation frequency of the current-starved VCO for $N$ (an odd number $\geq 5$) of stages is
+\begin{equation}
+f_{\text{osc}} = \frac{1}{N(t_1 + t_2)} = \frac{I_D}{N \cdot C_{\text{tot}} \cdot V_{DD}}
+\tag{19.23}
+\end{equation}
+
+which is $f_{\text{center}}(@ V_{\text{inVCO}} = V_{DD}/2 \text{ and } I_D = I_{\text{Dcenter}})$
+
+% firstly we have designed the Inverter stages and sized them accordingly and cascaded them to our required and connected a current Mirror to all the stages as in the Fig \ref{}. The current mirror is used to control the current flowing through the inverter stages and thus control the frequency of oscillation. The output of the VCO is taken from the output of the last inverter stage. The VCO is designed to operate at a frequency of 1 GHz.
+% \begin
+
 % \subsection{LSTM network}
 
 % \begin{figure*}[t]
