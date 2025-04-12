@@ -114,7 +114,34 @@ f_{\text{osc}} = \frac{1}{N(t_1 + t_2)} = \frac{I_D}{N \cdot C_{\text{tot}} \cdo
 
 which is $f_{\text{center}}(@ V_{\text{inVCO}} = V_{DD}/2 \text{ and } I_D = I_{\text{Dcenter}})$
 
-% firstly we have designed the Inverter stages and sized them accordingly and cascaded them to our required and connected a current Mirror to all the stages as in the Fig \ref{}. The current mirror is used to control the current flowing through the inverter stages and thus control the frequency of oscillation. The output of the VCO is taken from the output of the last inverter stage. The VCO is designed to operate at a frequency of 1 GHz.
+firstly we have designed the Inverter stages and sized them accordingly and cascaded them to our required and connected a current Mirror to all the stages as in the Fig \ref{fig:vco_circuit}. The current mirror is used to control the current flowing through the inverter stages and thus control the frequency of oscillation. The output of the VCO is taken from the output of the last inverter stage. The VCO is designed to operate at a frequency of 1 GHz.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figs/vco_c.png}
+	% \vspace{-0.3cm}
+	\caption{Current Starved VCO Circuit}
+	\label{fig:vco_circuit}
+	\vspace{0.5cm}
+\end{figure}\\
+The VCO ouput is not inherently a square wave (refer fig:\ref{fig:vco_op_c}) due to non-Ideal charachteristic of inverter here the ouput of the VCO is a irregular triangular wave. The output of the VCO is fed to a buffer and an inverter to convert the  of triangular wave to a square wave.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\textwidth]{figs/vco_op_both.png}
+	% \vspace{-0.3cm}
+	\caption{VCO output waveform before and after buffer+inverter}
+	\label{fig:vco_op_c}
+	\vspace{0.5cm}
+\end{figure}
+In Figure \ref{fig:vco_sim}, the Transient analysis of circuit in Figure \ref{fig:vco_circuit} is shown.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figs/vco_op1.png}
+	% \vspace{-0.3cm}
+	\caption{output waveform of VCO}
+	\label{fig:vco_sim}
+\end{figure}
+
+
 % \begin
 
 % \subsection{LSTM network}
