@@ -48,7 +48,7 @@ Kvco is an important factor it Determines the PLL settling time.
 There are different types of VCO like : Cross Coupled LC VCO, Current Starved VCO, Colpitts Oscillator. For this project, Current Starved VCO is used.
 \subsection{Frequency Divider}
 The frequency divider is a circuit that divides the frequency of the output signal from the VCO by a fixed integer value. The frequency divider is used to reduce the frequency of the output signal to match the frequency of the reference signal. The frequency divider can be implemented using a flip-flop or a counter. The output of the frequency divider is fed back to the phase detector to complete the PLL loop.
-\section*{Frequency Divider Principle}
+\subsubsection*{Frequency Divider Principle}
 A frequency divider works by toggling the output state of a flip-flop at each rising (positive) edge of the input clock signal. A single flip-flop divides the frequency of the input clock by a factor of 2. Cascading multiple flip-flops results in further division:
 \[
 f_{\text{out}} = \frac{f_{\text{in}}}{2^n}
@@ -59,22 +59,19 @@ Where:
     \item $f_{\text{out}}$ is the output frequency after division,
     \item $n$ is the number of flip-flops connected in series.
 \end{itemize}
-
-\section*{Positive Edge-Triggered Flip-Flop}
+\subsubsection*{Positive Edge-Triggered Flip-Flop}
 A positive edge-triggered flip-flop changes its output state only at the rising edge of the clock signal. A T (toggle) flip-flop toggles its output on each clock edge. However, a D flip-flop can be configured to behave as a T flip-flop by connecting the inverted output back to the input:
 \[
 D = \sim Q
 \]
 This ensures the flip-flop toggles its output on each positive clock edge.
-
-\section*{Implementation Using Pass Gates and Inverters}
+\subsubsection*{Implementation Using Pass Gates and Inverters}
 A D flip-flop can be constructed using two D latches in a master-slave configuration, controlled by a clock and its complement. Each latch consists of pass gates and inverters.
 \begin{itemize}
     \item Pass gates (transmission gates) are used to control the flow of data based on the clock signal. They are bidirectional switches typically made using a combination of NMOS and PMOS transistors.
     \item Inverters act as buffers and memory elements to store and propagate the logic state.
 \end{itemize}
-
-\section*{Frequency Division Design Circuit Using LT Spice}
+\subsubsection*{Frequency Division Design Circuit Using LT Spice}
 To design a frequency divider circuit in LT Spice, follow these steps:
 \begin{itemize}
     \item Create a schematic with a clock source and a D flip-flop.
@@ -82,14 +79,13 @@ To design a frequency divider circuit in LT Spice, follow these steps:
     \item Simulate the circuit to observe the frequency division at the output.
     \item For cascading, connect the output of one flip-flop to the clock input of the next stage.
 \end{itemize}
-\section*{Working Principle}
+\subsubsection*{Working Principle}
 \begin{itemize}
     \item When CLK = 1, the master latch is transparent and allows input data to propagate, while the slave latch holds its state.
     \item When CLK = 0, the master latch latches the input data, and the slave latch becomes transparent to pass the stored value to the output.
     \item This configuration ensures that data is transferred to the output only on the rising edge of the clock, making it a positive edge-triggered flip-flop.
 \end{itemize}
-
-\section*{Frequency Division Operation}
+\subsubsection*{Frequency Division Operation}
 By cascading multiple such flip-flops, a frequency divider circuit is realized. The output of each flip-flop acts as the clock for the next stage. Since each stage toggles at half the frequency of the previous one, the overall division factor is \(2^n\).
 
 For example:
@@ -104,7 +100,6 @@ For example:
     \caption{Your Image Caption Here}
     \label{fig:LT Spice Circuit}
 \end{figure}
-
 The schematic shown in the figure represents a frequency divider circuit designed using positive edge-triggered D flip-flops. The circuit is implemented at the transistor level using pass gates (transmission gates) and inverters, which are fundamental components in CMOS logic design. This implementation provides a realistic view of how sequential circuits function at a lower abstraction level, offering better understanding of timing, logic flow, and hardware behavior.
 The design uses a PULSE voltage source to generate the clock signal. This source is defined to oscillate between 0V and 1.8V with 1 ns rise and fall times, a pulse width of 100 ns, and a time period of 300 ns. The generated clock signal (clk) is used to drive the flip-flops in the circuit. An inverter is used to create the complementary clock signal (clk\_b), which is necessary to properly control the pass gates in the master-slave latch configuration of each D flip-flop.
 
@@ -122,10 +117,10 @@ In conclusion, the schematic demonstrates the design and working of a CMOS-based
     \caption{Your Image Caption Here}
     \label{fig:Output Waveform}
 \end{figure}
-\section*{Conclusion}
+\subsubsection*{Conclusion}
 In this project, a frequency divider circuit was successfully designed and implemented using positive edge-triggered D flip-flops constructed with pass gates and inverters. The use of transistor-level design under TSMC 180nm CMOS technology provided a deeper understanding of the internal working of sequential circuits. Simulation results verified that each flip-flop stage effectively divides the input clock frequency by a factor of two. This design is efficient for low-power, high-speed digital systems and demonstrates the practical use of basic building blocks in creating complex timing circuits.
 
-\section*{Applications}
+\subsubsection*{Applications}
 \begin{itemize}
     \item \textbf{Clock Division in Microprocessors:} Used to generate lower frequency clocks from a high-speed master clock.
     \item \textbf{Digital Watches and Timers:} Essential for time base generation.
