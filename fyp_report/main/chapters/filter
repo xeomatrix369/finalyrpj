@@ -1,8 +1,8 @@
 Here’s the LaTeX code that captures the full content and formatting of your PDF, including equations, bullet points, and sectioning:
 
 ```latex
-\documentclass[12pt]{article}
-\usepackage{amsmath}
+documentclass[12pt]{article}
+usepackage{amsmath}
 \usepackage{geometry}
 \usepackage{graphicx}
 \usepackage{enumitem}
