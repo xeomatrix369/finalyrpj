@@ -4,6 +4,14 @@ Phase-Locked Loops (PLLs) are critical components in modern electronic systems, 
 
 \section{Fundamentals of PLLs}
 % The PLL is a feedback control system that synchronizes the phase of an output signal with a reference signal. Early works, such as those by Gardner \cite{gardner2005phaselock}, laid the theoretical foundation for PLL design, focusing on the mathematical modeling and stability analysis of the loop.
+\section{PLL Terminologies}
+A few key parameter associated with PLLs are:
+\subsection{PLL bandwidth}
+The PLL bandwidth is the frequency range over which the PLL can effectively track the input signal.It provides a measure by which PLL’s ability to track the input clock can be determined. It is commonly designated by the symbol \( \omega_{\text{3db}} \) It is determined by the loop filter design and affects the PLL's response time and stability.
+\subsection{Natural Frequency}
+The natural frequency of a PLL is the frequency at which the system oscillates when not damped. It is a critical parameter that influences the PLL's transient response and stability. The natural frequency is typically denoted by \( \omega_n \) and is determined by the loop filter and VCO characteristics.
+\subsection{Damping Factor}
+The damping factor is a dimensionless parameter that describes how oscillations in a system decay after a disturbance. In PLLs, it is crucial for determining the transient response and stability of the system. A damping factor of 1 indicates critical damping, while values less than 1 indicate underdamping and greater than 1 indicate overdamping.
 
 \section{Types of PLLs}
 Several types of PLLs have been developed to cater to different applications:

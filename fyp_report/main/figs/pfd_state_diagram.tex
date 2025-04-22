@@ -1,0 +1,35 @@
+\begin{figure}
+    \centering
+    \resizebox{0.8\textwidth}{!}{%
+    
+
+% \begin{tikzpicture}[->, >=stealth', auto, node distance=3.5cm, semithick]
+% \tikzstyle{every state}=[draw=black, thick, fill=gray!10, minimum size=1.2cm]
+
+% % Nodes
+% \node[state] (S1) {UP=0\\DN=1};
+% \node[state, right of=S1] (S2) {UP=0\\DN=0};
+% \node[state, right of=S2] (S3) {UP=1\\DN=0};
+
+% % Transitions
+% \path 
+% (S1) edge[loop left] node[align=center]{FB ↑} (S1)
+% (S1) edge[bend left] node{REF ↑} (S2)
+% (S2) edge[bend left] node{FB ↑} (S1)
+% (S2) edge[bend left] node{REF ↑} (S3)
+% (S3) edge[bend left] node{FB ↑} (S2)
+% (S3) edge[loop right] node[align=center]{REF ↑} (S3);
+
+% \end{tikzpicture}
+\begin{tikzpicture}[node distance=3cm]
+    \node[state] (q1) {a};
+    \node[state, right of =q1] (q2) {b};
+    \node[state, right of = q2] (q3) {c};
+    % \node[state] (q2) [side of= q1] {locked};
+\end{tikzpicture}
+    
+    }%
+    \caption{PFD state diagram}
+    \label{fig:pfd_state_diagram}
+    % \vspace{-0.5cm}
+\end{figure}
