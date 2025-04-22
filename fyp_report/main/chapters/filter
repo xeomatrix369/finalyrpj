@@ -1,0 +1,72 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\geometry{margin=1in}
+
+\title{Higher Order Low Pass Filter in PLL}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Higher Order Low Pass Filter}
+
+In a Phase-Locked Loop (PLL), the Low Pass Filter (LPF) plays a crucial role in filtering out high-frequency components from the Phase Detector (PD) output and providing a clean control voltage to the Voltage-Controlled Oscillator (VCO).
+
+\section*{Objective of the Low Pass Filter in PLL}
+
+In a PLL, the LPF serves several essential objectives that ensure proper functioning and stability of the system. One of its primary roles is to remove the high-frequency components produced by the phase detector. When the phase detector compares the input signal with the feedback from the VCO, it generates an output containing both a difference frequency (desired) and a sum frequency (undesired).
+
+The LPF allows only the low-frequency or DC component to pass through while attenuating the high-frequency elements, thereby preventing unwanted signals from reaching the VCO. Another crucial objective of the LPF is to provide a smooth and stable control voltage to the VCO. Since the VCO is sensitive to fluctuations, any noise or rapid variations from the phase detector could cause jitter or instability in the output signal.
+
+The LPF minimizes these fluctuations, ensuring a consistent control input to the VCO. Additionally, the LPF determines important aspects of the loop dynamics, such as the loop bandwidth, stability, and response time. The filter's design affects how quickly the PLL can lock onto a signal and how stable the loop remains once locked.
+
+Furthermore, the LPF plays a significant role in suppressing spurious signals and reducing noise in the system. By filtering out harmonics and unwanted sidebands, it helps maintain signal purity, which is critical in communication and data systems. The LPF also influences the PLL’s ability to acquire and maintain lock, impacting parameters like the lock-in range, pull-in range, and hold-in range. Lastly, in terms of control theory, the LPF contributes to loop stability and phase margin, which are vital for avoiding overshoot or oscillation in the feedback system.
+
+Therefore, the LPF is not just a noise filter but a key component that shapes the performance and reliability of the entire PLL system. On summarizing, the filters are majorly objectified on the following:
+
+\begin{itemize}
+    \item Suppress the high-frequency components (typically the sum frequency from the phase detector output).
+    \item Pass the desired frequency (difference frequency, ideally near DC) to the VCO.
+    \item Ensure stability and smooth operation of the loop.
+\end{itemize}
+
+\section*{Working of Higher Order Loop in PLL}
+
+\begin{itemize}
+    \item When the loop is locked, the phase error is zero, and QA and QB rise and fall together. However, M3 turns on and off later than M4. That is, the up and down pulses suffer from a skew. Let us study the current injected by the charge pump, $I_{CP}$, into the loop filter with the aid of the waveforms.
+    
+    \item On the rising edge of QB, M4 turns on, drawing a current equal to $I_P$ while M3 is off. Thus, $V_{cont}$ experiences a negative jump equal to $-I_P R_1$, and $C_1$ is slightly discharged before M3 turns on at the falling edge of QA. When both M3 and M4 are on, $I_{CP}$ is zero.
+    
+    \item On the falling edge of QB, the reverse occurs: $I_{CP}$ is positive for about one gate delay, causing a positive jump on $V_{cont}$. Of course, the skew created by the inverter can be partially removed if a complementary pass gate is interposed between the PFD and the gate of M4.
+\end{itemize}
+
+Having seen the severity of the ripple, we must now devise a method of reducing it. A simple solution is to tie a capacitor directly from the control line to the ground. Illustrated in Fig.~7.45, the idea is to force the initial charge pump current to flow through $C_2$, thereby lowering the jump in $V_{cont}$.
+
+\section*{Calculations of Filter Parameters}
+
+In general, the cutoff frequency of the low pass filter is calculated by the resistors and capacitors connected in parallel ($R$ and $C$), it is given by:
+
+\[
+f_c = \frac{1}{2\pi R C}
+\]
+
+The transfer function is given by:
+
+\[
+H(s) = \frac{1 + sT_2}{sT_1(1 + sT_2)}
+\]
+
+The frequency-domain impulses therefore exhibit a height that rises with time. Upon traveling through the VCO, these impulses are multiplied by $\frac{K_{VCO}}{\omega}$ and translated to a center frequency of:
+
+\[
+f_{out} = M f_{in}
+\]
+
+The equation of output voltage is given by: (Note: The PDF ends abruptly here without a formula)
+
+\end{document}
