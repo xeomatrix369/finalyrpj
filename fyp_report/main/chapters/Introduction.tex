@@ -1,3 +1,26 @@
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{PLL implementation}
+
+
+\pagestyle{fancy}
+\fancyhf{} % Clear all header and footer fields
+\fancyhead[L]{PLL}
+\fancyhead[R]{\makebox[\textwidth][r]{\textbf{\nouppercase{\leftmark}}}} % Right-alig
+
+\fancyfoot[L]{\textbf{Department of ECE}} % Left side: Department name
+\fancyfoot[C]{\textbf{Jan 2025 – Apr 2025}} % Center: Semester dates
+\fancyfoot[R]{\textbf{Page \thepage}} % Right side: Page number
+\renewcommand{\footrulewidth}{0.4pt}
+% Define a custom page style for section pages
+\fancypagestyle{chapterstyle}{
+  \fancyhf{} % Clear all header and footer fields
+  \renewcommand{\headrulewidth}{0pt} 
+  \fancyfoot[L]{\textbf{Department of ECE}} % Left side: Department name
+  \fancyfoot[C]{\textbf{Jan 2025 – Apr 2025}} % Center: Semester dates
+  \fancyfoot[R]{\textbf{Page \thepage}} % Right side: Page number
+}
 \chapter{Introduction}
  A PLL is a feedback system that includes a VCO, phase detector, and low pass filter within its loop.Its purpose is to force the VCO to replicate and track the frequency and phase at the input when in lock. The PLL is a control system allowing one oscillator to track with another ie. it keeps the an ouput signal synchronized with the reference signal in terms of frequency and phase.
 \begin{equation}

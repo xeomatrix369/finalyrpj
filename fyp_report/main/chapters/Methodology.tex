@@ -45,7 +45,7 @@ The charge pump is a circuit that converts the error signal from the phase detec
 The CP circuit should ideally behave as in Table~
 \ref{tab:cp_function}.
 
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|}
 \hline
@@ -125,66 +125,10 @@ A D flip-flop can be constructed using two D latches in a master-slave configura
     \item Pass gates (transmission gates) are used to control the flow of data based on the clock signal. They are bidirectional switches typically made using a combination of NMOS and PMOS transistors.
     \item Inverters act as buffers and memory elements to store and propagate the logic state.
 \end{itemize}
-\subsubsection*{Frequency Division Design Circuit Using LT Spice}
-To design a frequency divider circuit in LT Spice, follow these steps:
-\begin{itemize}
-    \item Create a schematic with a clock source and a D flip-flop.
-    \item Configure the D flip-flop to toggle on each clock edge by connecting its inverted output back to the input.
-    \item Simulate the circuit to observe the frequency division at the output.
-    \item For cascading, connect the output of one flip-flop to the clock input of the next stage.
-\end{itemize}
-\subsubsection*{Working Principle}
-\begin{itemize}
-    \item When CLK = 1, the master latch is transparent and allows input data to propagate, while the slave latch holds its state.
-    \item When CLK = 0, the master latch latches the input data, and the slave latch becomes transparent to pass the stored value to the output.
-    \item This configuration ensures that data is transferred to the output only on the rising edge of the clock, making it a positive edge-triggered flip-flop.
-\end{itemize}
-\subsubsection*{Frequency Division Operation}
-By cascading multiple such flip-flops, a frequency divider circuit is realized. The output of each flip-flop acts as the clock for the next stage. Since each stage toggles at half the frequency of the previous one, the overall division factor is \(2^n\).
-
-For example:
-\begin{itemize}
-    \item 1 Flip-Flop → Divide by 2
-    \item 2 Flip-Flops → Divide by 4
-    \item 3 Flip-Flops → Divide by 8
-\end{itemize}
-\begin{figure}[H] % Use 'H' specifier for strict placement
-    \centering
-    \includegraphics[width=0.8\textwidth]{figs/circuit.png}
-    \caption{Frequency Divider Circuit}
-    \label{fig:LT Spice Circuit}
-\end{figure}
-The schematic shown in the figure represents a frequency divider circuit designed using positive edge-triggered D flip-flops. The circuit is implemented at the transistor level using pass gates (transmission gates) and inverters, which are fundamental components in CMOS logic design. This implementation provides a realistic view of how sequential circuits function at a lower abstraction level, offering better understanding of timing, logic flow, and hardware behavior.
-The design uses a PULSE voltage source to generate the clock signal. This source is defined to oscillate between 0V and 1.8V with 1 ns rise and fall times, a pulse width of 100 ns, and a time period of 300 ns. The generated clock signal (clk) is used to drive the flip-flops in the circuit. An inverter is used to create the complementary clock signal (clk\_b), which is necessary to properly control the pass gates in the master-slave latch configuration of each D flip-flop.
-
-Each flip-flop is constructed using two D latches connected in a master-slave configuration. Each latch consists of a pair of transmission gates, controlled by the clock and its complement, and inverters, which serve to store and propagate the logic state. This structure ensures that the flip-flop captures input data only on the rising edge of the clock signal, making it a positive edge-triggered flip-flop. To make the flip-flops function as T (toggle) flip-flops, the inverted output (\(Q_b\)) is fed back to the D input of each flip-flop. This feedback ensures that the flip-flop toggles its output on every rising edge of the clock.
-
-In this circuit, two flip-flops are cascaded to form a 2-stage frequency divider. The first flip-flop toggles its output on every clock cycle, effectively dividing the input frequency by 2. The second flip-flop receives the output of the first as its clock input and toggles on every rising edge of that signal, thereby dividing the frequency by another factor of 2. As a result, the final output signal has a frequency equal to one-fourth of the original input clock. This cascading approach can be extended to more stages for greater frequency division.
-
-The simulation is performed using SPICE, with the \texttt{.tran 100u} command specifying a transient analysis over a period of 100 microseconds to observe the dynamic behavior of the circuit. The schematic also includes a reference to a process design kit (\texttt{.INCLUDE tsmc018.lib}), which models the behavior of transistors based on the TSMC 180nm CMOS technology. This provides accurate transistor-level simulation results, allowing verification of correct operation and timing characteristics.
-
-In conclusion, the schematic demonstrates the design and working of a CMOS-based frequency divider using positive edge-triggered D flip-flops implemented with pass gates and inverters. It effectively divides the clock frequency by powers of two and can be used in a variety of digital systems requiring timing control, clock scaling, or counter functionality.
-
-\begin{figure}[H] % Use 'H' specifier for strict placement
-    \centering
-    \includegraphics[width=0.8\textwidth]{figs/waveform.png}
-    \caption{Frequency Divider Output Waveform}
-    \label{fig:Output Waveform}
-\end{figure}
-\subsubsection*{Conclusion}
-In this project, a frequency divider circuit was successfully designed and implemented using positive edge-triggered D flip-flops constructed with pass gates and inverters. The use of transistor-level design under TSMC 180nm CMOS technology provided a deeper understanding of the internal working of sequential circuits. Simulation results verified that each flip-flop stage effectively divides the input clock frequency by a factor of two. This design is efficient for low-power, high-speed digital systems and demonstrates the practical use of basic building blocks in creating complex timing circuits.
-
-\subsubsection*{Applications}
-\begin{itemize}
-    \item \textbf{Clock Division in Microprocessors:} Used to generate lower frequency clocks from a high-speed master clock.
-    \item \textbf{Digital Watches and Timers:} Essential for time base generation.
-    \item \textbf{Pulse Generation Circuits:} Helps in creating precise timing pulses for control systems.
-    \item \textbf{Frequency Synthesizers:} Used in communication systems to derive required frequencies.
-\end{itemize}
 \section{Design of PLL blocks}
 The numberous block have been designed for the PLL taking in consideration of the practical aspects.
 \subsection{PFD Design}
-As shown in figure \ref{fig:pfd_dff_blk}, PFD circuit requires two D flip-flops, and one AND gate. A very fast RESET is required in order to reduce the PFD dead-zone.Hence it limits the reference frequency at which the pll can be clocked at.Here to overcome the dead zone issue we have implemented a nand based pfd.
+As shown in figure \ref{fig:pfd_dff_blk}, PFD circuit requires two D flip-flops, and one AND gate. A very fast RESET is required in order to reduce the PFD dead-zone.Hence it limits the reference frequency at which the pll can be clocked at.Here to overcome the dead zone issue we have implemented a NAND based pfd.
 % \begin{figure}
 % 	\centering
 % 	\includegraphics[width=0.5\textwidth]{figs/pfd_dff_blk.png}
@@ -193,21 +137,338 @@ As shown in figure \ref{fig:pfd_dff_blk}, PFD circuit requires two D flip-flops,
 % 	\label{fig:pfd_dff_blk}
 % 	\vspace{0.5cm}
 % \end{figure}
+\subsubsection{Inverter}
+The inverter is implemented in static CMOS logic. The circuit is made using 2 transistors, 1 PMOS and 1 NMOS. The PMOS transistor is connected to the power supply and the NMOS transistor is connected to ground. The output of the inverter is taken from the drain of the NMOS transistor.
+
+CMOS inverter circuit and transistor size are shown in Figure \ref{fig:inverter} and Table \ref{tab:inverter_size} respectively.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figs/inverter_circuit.png}
+	% \vspace{-0.3cm}
+	\caption{CMOS Inverter}
+	\label{fig:inverter}
+	\vspace{0.5cm}
+\end{figure}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+Transisotr & M1 & M2 \\
+\hline
+W/L & 360u/180u & 180/180u \\
+\hline
+\end{tabular}
+\caption{Transistor size of inverter}
+\label{tab:inverter_size}
+\vspace{0.5cm}
+\end{table}
+The output of Transient Simulation of inverter is shown in Figure \ref{fig:inverter_output}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figs/inverterop.png}
+	% \vspace{-0.3cm}
+	\caption{Simulation of inverter}
+	\label{fig:inverter_output}
+	\vspace{0.5cm}
+\end{figure}
+
 \subsubsection{2 intput NAND gate}
 The 2 input NAND gate is implement in static CMOS logic. The circuit is made using 4 transistors, 2 PMOS and 2 NMOS. The PMOS transistors are connected in parallel and the NMOS transistors are connected in series. The output of the NAND gate is taken from the drain of the NMOS transistors.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figs/2nand_circuit.png}
+	% \vspace{-0.3cm}
+	\caption{CMOS 2 input NAND gate}
+	\label{fig:2nand_circuit}
+	\vspace{0.5cm}
+\end{figure}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Transisotr & M1 & M4 & M2 & M3 \\
+\hline
+W/L & 360u/180u & 360u/180u & 180u/180u & 180u/180u  \\
+\hline
+\end{tabular}
+\caption{Transistor size of 2 input NAND gate}
+\label{tab:2nand_size}
+\vspace{0.5cm}
+\end{table}
+The Transient simulation of 2 input NAND gate is shown in Figure \ref{fig:2nand_output}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figs/nand2op.png}
+	% \vspace{-0.3cm}
+	\caption{Simulation of 2 input NAND gate}
+	\label{fig:2nand_output}
+	\vspace{0.5cm}
+\end{figure}
+
 \subsubsection{3 input NAND gate}
+The 3 input NAND gate is implemented in static CMOS logic. The circuit is made using 6 transistors, 3 PMOS and 3 NMOS. The PMOS transistors are connected in parallel and the NMOS transistors are connected in series. The output of the NAND gate is taken from the drain of the NMOS transistors. The 3 input NAND gate is used to implement the PFD circuit.
+
+CMOS inverter circuit and transistor size are shown in Figure \ref{fig:3nand_circuit} and Table \ref{tab:3nand_size} respectively.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{figs/3nand_circuit.png}
+	% \vspace{-0.3cm}
+	\caption{CMOS 3 input NAND gate}
+	\label{fig:3nand_circuit}
+	\vspace{0.5cm}
+\end{figure}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+Transisotr & M1 & M2 & M3 & M4 & M5 & M6  \\
+\hline
+W/L & 360u/180u & 360u/180u & 360u/180u & 180/180u & 180/180u & 180/180u \\
+\hline
+\end{tabular}
+\caption{Transistor size of 3 input NAND gate}
+\label{tab:3nand_size}
+\vspace{0.5cm}
+\end{table}
+The Transient simulation of 3 input NAND gate is shown in Figure \ref{fig:3nand_output}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figs/nand3op.png}
+	% \vspace{-0.3cm}
+	\caption{Simulation of 3 input NAND gate}
+	\label{fig:3nand_output}
+	\vspace{0.5cm}
+\end{figure}
 \subsubsection{4 input NAND gate}
-\subsubsection{inverter}
+The 4 input NAND gate is implemented in static CMOS logic. The circuit is made using 8 transistors, 4 PMOS and 4 NMOS. The PMOS transistors are connected in parallel and the NMOS transistors are connected in series. The output of the NAND gate is taken from the
+drain of the NMOS transistors. The 4 input NAND gate is used to implement the PFD circuit.
+
+CMOS inverter circuit and transistor size are shown in Figure \ref{fig:4nand_circuit} and Table \ref{tab:4nand_size} respectively.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{figs/4nand_circuit.png}
+	% \vspace{-0.3cm}
+	\caption{CMOS 4 input NAND gate}
+	\label{fig:4nand_circuit}
+	\vspace{0.5cm}
+\end{figure}
+
+\begin{table}[H]
+	\resizebox{\textwidth}{!}{
+		\centering
+		\begin{tabular} {|c|c|c|c|c|c|c|c|c|}
+		\hline
+		Transistor & M1 & M2 & M3 & M4 & M5 & M6 & M7 & M8 \\
+		\hline
+		W/L & 360u/180u & 360u/180u & 360u/180u & 360u/180u & 180u/720u & 180u/720u & 180u/720u &180u/720u \\
+		\hline
+		\end{tabular}	
+	}
+	\caption{Transistor size of 4 input NAND gate}
+	\label{tab:4nand_size}
+	\vspace{0.5cm}
+\end{table}	
+
+The Transient simulation of 4 input NAND gate is shown in Figure \ref{fig:4nand_output}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figs/nand4op.png}
+	% \vspace{-0.3cm}
+	\caption{Simulation of 4 input NAND gate}
+	\label{fig:4nand_output}
+	\vspace{0.5cm}
+\end{figure}
 \subsubsection{NAND based PFD}
+Nand based PFD is implemented using above logic gates with Delay element to counter the Jitter due to arrising of Deadzone.The Figure \ref{nand_pfd} shows the PFD circuit.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figs/pfd_circuit}
+	% \vspace{-0.3cm}
+	\caption{NAND based PFD circuit}
+	\label{nand_pfd}
+	\vspace{0.5cm}
+\end{figure}
+The PFD output is such that when there is a phase difference between the two input signals, the PFD generates a pulse on the UP or DOWN output. The width of the pulse is proportional to the phase difference between the two input signals. This can be observed in the transient simulation of the PFD circuit shown in Figure \ref{fig:pfd_op}. The UP and DOWN outputs are shown in the figure. The UP output is high when the reference signal is ahead of the feedback signal, and the DOWN output is high when the feedback signal is ahead of the reference signal. The width of the pulse is proportional to the phase difference between the two input signals.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figs/pfdop.png}
+	% \vspace{-0.3cm}
+	\caption{Transient Simulation of PFD circuit}
+	\label{fig:pfd_op}
+	\vspace{0.5cm}
+\end{figure}
 \subsection{Charge Pump Design}
+A charge pump is a circuit that sources or sinks charge for a controlled amount of time. A simple realization is: if $S_1$ is on, $I_1$ charges $C_1$, and if $S_2$ is on, $I_2$ discharges it.
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.6\textwidth]{figs/cp1}
+%     \caption{Basic charge pump circuit}
+% \end{figure}
+
+The controls are called \textbf{Up} and \textbf{Down}, respectively, determining whether the output voltage rises or falls. Assume $I_1 = I_2 = I_p$. The transistor-level implementation uses $M_1$ and $M_2$ as current sources and $M_3$ and $M_4$ as switches. This is called a “drain-switched” CP.
+
+\subsubsection{CP/Capacitor Cascade}
+Each time a phase comparison is made, $QA$ goes high, $S_1$ turns on, $I_1$ charges $C_1$, and $V_{out}$ rises by:
+\[
+\Delta V = \left(\frac{I_p}{C_1}\right)\Delta T
+\]
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.6\textwidth]{figs/cp2}
+%     \caption{CP/Capacitor cascade operation}
+% \end{figure}
+
+If the phase difference remains constant, $V_{out}$ increases indefinitely, implying infinite gain for finite phase error. For $V_{out}$ to be finite, the phase error must be zero.
+
+\subsubsection{Basic Charge-Pump PLL}
+We now construct a PLL using the PFD/CP/capacitor cascade. If the loop is locked:
+\[
+f_{out} = f_{in}, \quad \phi_{out} = \phi_{in}
+\]
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.7\textwidth]{figs/cp3}
+%     \caption{PLL using PFD/CP/capacitor cascade}
+% \end{figure}
+
+The loop locks with zero static phase error due to the integration effect of the CP and capacitor.
+
+\subsubsection{CP Transfer Function}
+The impulse response is derived by first applying a phase step. The voltage change each cycle is:
+\[
+\Delta V = \left(\frac{\Delta \phi_1}{2\pi}\right)T_{in}\left(\frac{I_p}{C_1}\right)
+\]
+The slope is:
+\[
+\frac{\Delta V}{T_{in}} = \left(\frac{\Delta \phi_1}{2\pi}\right)\left(\frac{I_p}{C_1}\right)
+\]
+Thus, the impulse response is:
+\[
+h(t) = \left(\frac{\Delta \phi_1}{2\pi}\right)\left(\frac{I_p}{C_1}\right)u(t)
+\]
+And the Laplace transform (transfer function):
+\[
+\frac{V_{cont}(s)}{\Delta \phi(s)} = \frac{I_p}{2\pi C_1 s}
+\]
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.65\textwidth]{figs/cp4}
+%     \caption{Impulse response analysis of charge pump}
+% \end{figure}
+
+This is an ideal integrator. Combined with a VCO having $K_{VCO}/s$, the open-loop transfer function is:
+\[
+H_{open}(s) = \frac{I_p K_{VCO}}{2\pi C_1 s^2}
+\]
+This has two poles at origin (type-II PLL), and the closed-loop transfer function is:
+\[
+H(s) = \frac{I_p K_{VCO}}{2\pi C_1 s^2 + I_p K_{VCO}}
+\]
+
+\subsubsection{Stabilizing the Loop}
+To stabilize, a resistor $R_1$ is added in series with $C_1$:
+\[
+\frac{V_{cont}(s)}{\Delta \phi(s)} = \frac{I_p}{2\pi} \left( \frac{1}{C_1 s} + R_1 \right)
+\]
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.65\textwidth]{figs/cp5}
+%     \caption{Stabilized loop with series resistor}
+% \end{figure}
+
+The loop filter introduces a zero at $s = -1/(R_1 C_1)$. The closed-loop transfer function becomes:
+\[
+H(s) = \frac{I_p K_{VCO}}{2\pi C_1 (R_1 C_1 s + 1) s^2 + I_p K_{VCO} R_1 s + \frac{I_p K_{VCO}}{2\pi C_1}}
+\]
+
+With:
+\[
+\omega_n = \sqrt{\frac{I_p K_{VCO}}{2\pi C_1}}, \quad \zeta = \frac{R_1}{2} \sqrt{\frac{2\pi}{I_p K_{VCO} C_1}}
+\]
+
+\subsubsection{Real-World Considerations}
+Charge pumps exhibit ripple on control voltage requiring additional capacitance.
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.65\textwidth]{figs/cp6}
+%     \caption{Skew and ripple effects in CP}
+% \end{figure}
+
+Due to skew in control signals, current imbalance results in jumps in $V_{cont}$:
+\[
+\Delta V = \pm I_p R_1
+\]
+
+These jumps modulate the VCO:
+\[
+V_{out}(f) = j\frac{K_{VCO} I_p R_1 T_{sk} \Delta T}{T_{in}} \sum_{k=-\infty}^{\infty} \delta(f - M f_{in} - k f_{in})
+\]
+
+\subsubsection{Loop Filter Impedance and PM}
+Add a second capacitor $C_2$. Impedance becomes:
+\[
+Z(s) = \left[R_1 + \frac{1}{C_1 s} \right] \parallel \left[ \frac{1}{C_2 s} \right]
+\]
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.6\textwidth]{figs/cp7}
+%     \caption{Loop filter with additional capacitor}
+% \end{figure}
+
+\[
+T(s) = \frac{I_p}{2\pi} \cdot \frac{R_1 C_1 s + 1}{R_1 C_{eq} s + 1} \cdot \frac{1}{(C_1 + C_2)s} \cdot \frac{K_{VCO}}{Ms}
+\]
+
+Where $C_{eq} = \frac{C_1 C_2}{C_1 + C_2}$ and third pole:
+\[
+\omega_{p3} = \frac{1}{R_1 C_{eq}}
+\]
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.6\textwidth]{figs/cp8}
+%     \caption{Phase margin response}
+% \end{figure}
+
+Phase margin degradation:
+\[
+PM = \tan^{-1}(R_1 C_1 \omega_u) - \tan^{-1}(R_1 C_{eq} \omega_u)
+\]
+
+\subsubsection{Second-Order Filter Topology}
+A second-order filter allows $V_{R_1}$ to jump, while $C_2$ smooths ripple.
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.65\textwidth]{figs/cp9}
+%     \caption{Second-order filter topology}
+% \end{figure}
+
+If $C_1 \gg C_2$, $V_{cont}$ changes minimally during CP pulse. Then $C_2$ shares charge with $C_1$, stabilizing the loop.
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.6\textwidth]{figs/cp10}
+%     \caption{Charge sharing and pulse formation}
+% \end{figure}
+
 \subsection{Low Pass Filter Design}
+To suppress the high frequency noise from the PFD, a low pass filter is used. The low pass filter (also called the “loop ﬁlter”) is designed using a resistor and a capacitor. The resistor limits the current flowing into the capacitor, while the capacitor stores the charge. The output of the low pass filter is a smooth control voltage that is fed to the VCO. The low pass filter is designed to have a cutoff frequency of 1 MHz.
 \subsection{Voltage Controlled Oscillator Design}
 In this section the Design of VCO has been shown.We have choosen current starved VCO for our design. The current starved VCO is a type of voltage-controlled oscillator (VCO) that uses a current source to control the frequency of oscillation. The basic idea behind the current starved VCO is to use a current source to control the charging and discharging of a capacitor, which in turn determines the frequency of oscillation. The current starved VCO is widely used in PLL circuits because it is simple to implement and can be easily integrated into CMOS technology.
 The VCO should be Linear in a particular Operating region. The PLL built in this project will be of of the application 1GHz
 
 
 % \includegraphics[0.6\textwidth]{figs/cs_vco_design.png}
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{figs/cs_vco_design.png}
 	% \vspace{-0.3cm}
@@ -215,7 +476,7 @@ The VCO should be Linear in a particular Operating region. The PLL built in this
 	\label{fig:cs_vco_design}
 	\vspace{0.5cm}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{figs/vco_simplified.png}
 	% \vspace{-0.3cm}
@@ -292,6 +553,64 @@ In Figure \ref{fig:vco_sim}, the Transient analysis of circuit in Figure \ref{fi
 
 \subsection{Frequency Divider Design}
 \label{sec:freq_div}
+To design a frequency divider circuit in LT Spice, follow these steps:
+\begin{itemize}
+    \item Create a schematic with a clock source and a D flip-flop.
+    \item Configure the D flip-flop to toggle on each clock edge by connecting its inverted output back to the input.
+    \item Simulate the circuit to observe the frequency division at the output.
+    \item For cascading, connect the output of one flip-flop to the clock input of the next stage.
+\end{itemize}
+\subsubsection*{Working Principle}
+\begin{itemize}
+    \item When CLK = 1, the master latch is transparent and allows input data to propagate, while the slave latch holds its state.
+    \item When CLK = 0, the master latch latches the input data, and the slave latch becomes transparent to pass the stored value to the output.
+    \item This configuration ensures that data is transferred to the output only on the rising edge of the clock, making it a positive edge-triggered flip-flop.
+\end{itemize}
+\subsubsection*{Frequency Division Operation}
+By cascading multiple such flip-flops, a frequency divider circuit is realized. The output of each flip-flop acts as the clock for the next stage. Since each stage toggles at half the frequency of the previous one, the overall division factor is \(2^n\).
+
+For example:
+\begin{itemize}
+    \item 1 Flip-Flop → Divide by 2
+    \item 2 Flip-Flops → Divide by 4
+    \item 3 Flip-Flops → Divide by 8
+\end{itemize}
+\begin{figure}[H] % Use 'H' specifier for strict placement
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/circuit.png}
+    \caption{Frequency Divider Circuit}
+    \label{fig:LT Spice Circuit}
+\end{figure}
+The schematic shown in the figure represents a frequency divider circuit designed using positive edge-triggered D flip-flops. The circuit is implemented at the transistor level using pass gates (transmission gates) and inverters, which are fundamental components in CMOS logic design. This implementation provides a realistic view of how sequential circuits function at a lower abstraction level, offering better understanding of timing, logic flow, and hardware behavior.
+The design uses a PULSE voltage source to generate the clock signal. This source is defined to oscillate between 0V and 1.8V with 1 ns rise and fall times, a pulse width of 100 ns, and a time period of 300 ns. The generated clock signal (clk) is used to drive the flip-flops in the circuit. An inverter is used to create the complementary clock signal (clk\_b), which is necessary to properly control the pass gates in the master-slave latch configuration of each D flip-flop.
+
+Each flip-flop is constructed using two D latches connected in a master-slave configuration. Each latch consists of a pair of transmission gates, controlled by the clock and its complement, and inverters, which serve to store and propagate the logic state. This structure ensures that the flip-flop captures input data only on the rising edge of the clock signal, making it a positive edge-triggered flip-flop. To make the flip-flops function as T (toggle) flip-flops, the inverted output (\(Q_b\)) is fed back to the D input of each flip-flop. This feedback ensures that the flip-flop toggles its output on every rising edge of the clock.
+
+In this circuit, two flip-flops are cascaded to form a 2-stage frequency divider. The first flip-flop toggles its output on every clock cycle, effectively dividing the input frequency by 2. The second flip-flop receives the output of the first as its clock input and toggles on every rising edge of that signal, thereby dividing the frequency by another factor of 2. As a result, the final output signal has a frequency equal to one-fourth of the original input clock. This cascading approach can be extended to more stages for greater frequency division.
+
+The simulation is performed using SPICE, with the \texttt{.tran 100u} command specifying a transient analysis over a period of 100 microseconds to observe the dynamic behavior of the circuit. The schematic also includes a reference to a process design kit (\texttt{.INCLUDE tsmc018.lib}), which models the behavior of transistors based on the TSMC 180nm CMOS technology. This provides accurate transistor-level simulation results, allowing verification of correct operation and timing characteristics.
+
+In conclusion, the schematic demonstrates the design and working of a CMOS-based frequency divider using positive edge-triggered D flip-flops implemented with pass gates and inverters. It effectively divides the clock frequency by powers of two and can be used in a variety of digital systems requiring timing control, clock scaling, or counter functionality.
+
+\begin{figure}[H] % Use 'H' specifier for strict placement
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/waveform.png}
+    \caption{Frequency Divider Output Waveform}
+    \label{fig:Output Waveform}
+\end{figure}
+
+
+
+
 \subsection{Complete PLL Design}
 \label{sec:complete_pll}
+The Blocks are integrated to form a complete PLL as shown in figure \ref{fig:pll_1}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figs/pll_circuit.png}
+	% \vspace{-0.3cm}
+	\caption{Complete PLL Design}
+	\label{fig:PLL Design}
+	\vspace{0.5cm}
+\end{figure}
 

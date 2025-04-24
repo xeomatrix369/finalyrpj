@@ -1,0 +1,41 @@
+\tikzstyle{block} = [draw, rectangle]
+\tikzstyle{input} = [coordinate]
+\tikzstyle{output} = [coordinate]
+\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[
+      block/.style={draw, thick, minimum width=3cm, minimum height=2.5cm, align=center},
+      line/.style={-Stealth, thick},
+      node distance=1.5cm and 1.5cm
+    ]
+    
+    % Blocks
+    \node[input,name=inputref] (input) {fref};
+    \node[block, right=2cm of input] (pd) {PD};
+    \node[block, right of=pd] (cp) {CP};
+    \node[block, right of=cp] (vco) {VCO};
+    \node[block, below of=cp , node distance=1cm] (lpf) {LPF};
+    
+% Signals
+\coordinate[left=1.5cm of pd] (inputref);
+\coordinate[below=0cm of inputref] (inputfb);
+\coordinate[right=1.5cm of vco] (output);
+    
+    % Connections
+    % \draw [->] (inputref) -- node {$fref$} (pd);
+    % \draw[--] (inputref) node[left] {$f_{ref}$} -- (pd);
+    % \draw[--] (inputfb) node[left] {$f_{fb}$} -- (pd);
+    \draw[line] ( inputref) -- node[above] {$f\_ref$} (pd);
+    \draw[line] (inputfb) -- node[above] {$f\_fb$} ([yshift=2cm]pd);
+    % \draw[--] (pd) -- (cp);
+    % \draw[line] (cp) -- node[above] {$V_{cntrl}$} (vco);
+    % \draw[line] (cp) |- (lpf);
+    % \draw[line] (lpf) -| (vco);
+    
+    % \draw[line] (vco) -- node[above] {$f_{out}$} (output);
+    % \draw[line] (output) |- ++(0,-2) -| (inputfb);
+    
+    \end{tikzpicture}
+    \caption{PLL Block Diagram}
+\end{figure}

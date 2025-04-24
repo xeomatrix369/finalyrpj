@@ -1,0 +1,21 @@
+\begin{algorithm*}
+  \caption{Inference on Bipartite CRF \label{alg:infer}}
+  \begin{algorithmic}[1]
+  	  %\Statex
+      \State $Q_i(l) \coleq \operatorname{softmax}_i(-\phi_i(l))$ and $R_i(t) \coleq \operatorname{softmax}_i(-\psi_i(t))$\Comment{Initialization}
+      \While{not converged}
+        \State $Q'_i(l) \minuseq \phi_i(l)$ \Comment{Update due to the first term}
+        \State $Q'_i(l) \minuseq \sum_{l' \in \mathcal{L}} \left(\mu(l, l')\sum_{j \neq i}{\Sim_\Phi(i, j)\,Q_j(l')}\right)$ \Comment{Update due to the second term}
+        
+        \State $R'_i(t) \minuseq \psi_i(t)$ \Comment{Update due to the third term}
+        \State $R'_i(t) \minuseq \sum_{t' \in \mathcal{T}} \left([t \neq t']\sum_{j \neq i}{\Sim_\Psi(i, j)\,R_j(t')}\right)$ \Comment{Update due to the fourth term}
+        \State $Q'_i(l) \minuseq \sum_{t \in \mathcal{T}} \Big( f(l, \cl(t))\, R_i(t)\Big)$
+        \State $R'_i(t) \minuseq \sum_{l \in \mathcal{L}} \Big( f(l, \cl(t))\, Q_i(l) \Big)$ \Comment{Updates due to the fifth term}
+
+		\State $Q'_i(l) \minuseq \sum_{t \in \mathcal{T}} \left( f(l, \cl(t))\, \sum_{j \neq i}{\Sim_\Omega(i, j)\,R_j(t')} \right)$
+		\State $R'_i(t) \minuseq \sum_{l \in \mathcal{L}} \left( f(l, \cl(t))\, \sum_{j \neq i}\Sim_\Omega(i, j)\,Q_j(l')\right)$ \Comment{Updates due to the sixth term}
+		\State $Q_i(l) \coleq \operatorname{softmax}_i\Big(Q'_i(l)\Big)$ and $R_i(t) \coleq \operatorname{softmax}_i\Big(R'_i(t)\Big)$ \Comment{Normalization}
+      \EndWhile
+      %\State
+  \end{algorithmic}
+\end{algorithm*} 

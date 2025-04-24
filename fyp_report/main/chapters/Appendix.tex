@@ -1,61 +1,7 @@
 \chapter*{Appendix I}
 \addcontentsline{toc}{chapter}{Appendix I}
-\label{chapter:appendix1}
-
-Ability to track multiple objects in BEV space and the possible usage of heuristics in BEV space is explained here as an extension of the single image based tracking method presented earlier. \\
-
-\noindent \textbf{Extensibility to 3D tracking} \\
-Here we use the concept that objects cannot overlap in Bird’s Eye View space. An LSTM network is trained to predict the change of parameter ‘q’ between consecutive frames. That is, for given $\dot{q_{t-k}},...,\dot{q_{t-1}},\dot{q_{t}} \rightarrow \dot{q_{t+1}}$ is predicted where $\dot{q_{t}} = q_{t} - q_{t-1}$ and $q \in (C,S,\theta)$. Here;$C = C_{x}, C_{y}, C_{z}$ (the centre co-ordinates of the object), $S = (h,w,l)$ (object dimensions) and $\theta$ is the angle of rotation around the vertical axis.
-The loss function for training the parameter predictor (LSTM) is as follows. 
-
-\begin{multline}
-LOSS_{pred}(p,\beta,\alpha,\delta,\theta) = \\
-\sum_{i=1}^{N} \beta_{class_{i}} \Biggl( \Biggl( \sum_{p\in (C,S)}\alpha_{p}L_{Huber,\delta_{p}}(p_{pred},p_{gt}) \Biggr) + \\ \alpha_{\theta}L_{\theta}(\theta_{pred},\theta_{gt})_{object=i} \Biggr)
-\tag{7}
-\end{multline}
-
-Here $P_{pred}$ refers to the predicted parameter and $P_{gt}$ refers to the ground truth parameter. 
-\par $\delta_{p}$ is a parameter based learnable which in turn is the quadratic-linear margin of the Huber loss function and $\alpha_{p}$ or $\alpha_{\theta}$ is a regressed parameter based learnable (where in the case of $\alpha_{\theta}$, the regressed parameter is $\theta$ and $\alpha_{p}$ is similarly interpreted whereas the scope of $\alpha_{p}$ is different from that of $\delta_{p}$, considering the impact on cost function) and $\beta_{class i}$ is the class based learnable parameter w.r.t. the class of the $i^{th}$ object.
-\par Here, $p = C_{x},C_{y},C_{z},h,w,l$ , $\beta = \beta_{class} | class\in classes$, $\alpha=[[\alpha_{p}]_{p \in parameters}, \alpha_{\theta}]$ and $\delta=[\delta_{p}]_{p \in parameters}$.
-\par Due to the discontinuous nature of the parameter $\theta$ at the two extreme ends of its domain $[-\pi, \pi]$, and due to the fact that $\theta = \pi$ and $\theta = -\pi$ depict the same orientation, it is not directly incorporated into the Huber loss function. It is handled separately using $L_{\theta}$ function \cite{DeepSiam:geometry}, where $\theta_{pred},\theta_{gt}$ are predicted and ground truth values of the parameter $\theta$ respectively.
-$$
-L_{\theta}(\theta_{pred},\theta_{gt}) = 0.5(1 - \cos(\theta_{gt} - \theta_{pred})) \eqno{(8)}
-$$
-
-
-\noindent \textbf{Constraints as penalties}\\
-First, we introduce the hard constraint on BEV space that projections of the objects on to the x-z plane in general co-ordinates have no intersection. However, most of the research is focused on building up 3D bounding boxes of objects where the rectangular projection does not create a clear cut segmentation of the object (ex: human) on BEV space. Therefore, we minimize an additional term as follows.
-$$
-I = \sum_{v_{i},v_{j} \in objects_{pred}, i \neq j} (1 + \xi^{2}_{class_{i}, class_{j}})(v_{i_{BEV}} \cap v_{j_{BEV}})  \eqno{(9)}
-$$
-Where $v_{i_{BEV}}$ is the projection of the bounding box of the object $v_{i}$ onto the BEV space and $\xi_{class_{i},class{j}}$ is a learnable based on object classes under intersection which in turn forms a set $\xi_{class \times class}$ and each term is squared to ensure positivity.
-Therefore, the final minimization function is as follows,
-$$
-L(p,\beta, \alpha, \delta, \theta, \{\xi\}) = LOSS_{pred}(p,\beta, \alpha, \delta, \theta) + I \eqno{(10)}
-$$
-However, at an optimum point $(p^{*},\beta^{*}, \alpha^{*}, \delta^{*}, \theta^{*}, \{\xi\}^{*})$; the loss function obeys a feature observed in Lagrange constrained optimization that;
-$\nabla L = 0$ where $\nabla$ refers to the discrete derivative (this statement is intuitive only with the discrete derivative).
-\par This implies that:
-$$
-\nabla_{p,\theta}Loss_{pred} = -(1 + \xi^{2}_{class_{i}, class_{j}})\nabla_{p,\theta}(v_{i_{BEV}} \cap v_{j_{BEV}})  \eqno{(11)}
-$$
-for all classes at optimum parameters $p^{*},\theta^{*}$. Therefore $(1 + \xi^{2}_{class_{i}, class_{j}})$ behaves similar to a Lagrange multiplier. This setting helps to build up a network that trains not only based on the individual performance per object but also encountering the joint effect of multiple object scenarios.
-
-
+\section*{Appendix I: Circuit Schematic}
+\addcontentsline{toc}{section}{Circuit Schematic}	
 \chapter*{Appendix II}
-\addcontentsline{toc}{chapter}{Appendix II}
-\label{chapter:appendix2}
-
-\textbf{Mean Field Algorithm} \\
-\input{figs/algo.tex}
-
 
 \chapter*{Appendix III}
-\addcontentsline{toc}{chapter}{Appendix III}
-\label{chapter:appendix3}
-
-\noindent \textbf{List of Publications}
-\begin{itemize}
-	\item \noindent \href{https://arxiv.org/pdf/1912.11651.pdf}{Extending Multi-Object Tracking systems to better exploit appearance and 3D information} \\ 
-	\item \noindent \href{https://arxiv.org/pdf/1912.05307.pdf}{Bipartite Conditional Random Fields for Panoptic Segmentation} 
-\end{itemize}
